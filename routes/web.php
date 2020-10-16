@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::route('bears.index');
+});
+
+Route::get('bears/{longitude}/{laditude}', [\App\Http\Controllers\BearController::class, 'index']);
+
+Route::prefix('admin')->group(function () {
+    Route::resource('bears', \App\Http\Controllers\Admin\BearController::class);
 });
